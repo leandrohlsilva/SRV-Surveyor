@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;AutomaticBreaking1.2/src/AutomaticBreaking2.0.cpp&apos; to &apos;AutomaticBreaking1.2.cpp&apos;" description="Rename resource &apos;AutomaticBreaking2.0.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/AutomaticBreaking2.0.cpp" name="AutomaticBreaking1.2.cpp" stamp="1320517074838" updateReferences="true"/>
+</session>

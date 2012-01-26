@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;DesktopRemoteControl/src/main.cpp&apos; to &apos;DesktopRemoteControl.cpp&apos;" description="Rename resource &apos;main.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main.cpp" name="DesktopRemoteControl.cpp" stamp="1314034718271" updateReferences="true"/>
+</session>

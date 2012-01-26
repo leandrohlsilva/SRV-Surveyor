@@ -1,0 +1,4 @@
+#Thu Aug 25 15:20:03 BRT 2011
+RUN_IN_BACKGROUND=true
+eclipse.preferences.version=1
+ENABLED_DECORATORS=org.eclipse.cdt.ui.indexedFiles\:false,org.eclipse.jdt.ui.override.decorator\:true,org.eclipse.jdt.ui.interface.decorator\:false,org.eclipse.jdt.ui.buildpath.decorator\:true,org.eclipse.pde.ui.binaryProjectDecorator\:false,org.eclipse.team.cvs.ui.decorator\:true,org.eclipse.ui.LinkedResourceDecorator\:true,org.eclipse.ui.ContentTypeDecorator\:true,

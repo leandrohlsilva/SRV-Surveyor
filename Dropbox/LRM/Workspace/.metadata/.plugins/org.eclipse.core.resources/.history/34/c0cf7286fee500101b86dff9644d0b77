@@ -1,0 +1,331 @@
+//*****************************************************************************
+// * USP->ICMC->LRM
+// * pessin@gmail.com
+// ***************************************************************************/
+
+#include <boost/signals2/mutex.hpp>
+#include <SFML/Network.hpp>
+#include "SRV.h"
+#include <stdio.h>
+#include <string.h>
+
+// ****************************************************************************
+// Construtor (conexao)
+// ****************************************************************************
+
+SRV::SRV(sf::IPAddress _Address, unsigned short _Port)
+{
+	Port = _Port;
+	Address = _Address;
+
+	Client.Connect(Port, Address);
+
+	IndiceNomeImagem = 0;
+}
+
+// ******************************************************************************
+// Ativa laser  
+// ******************************************************************************
+
+int SRV::ativaLaser()
+{
+
+	SRV::mutex.lock();
+	// send
+	char ToSend[] = "l";
+	Client.Send(ToSend, sizeof(ToSend));
+
+	// receive 
+	char Message[128];
+	std::size_t Received;
+	Client.Receive(Message, sizeof(Message), Received);
+
+	SRV::mutex.unlock();
+
+	return 0;
+}
+
+// ******************************************************************************
+// Desativa laser  
+// ******************************************************************************
+
+int SRV::desativaLaser()
+{
+
+	SRV::mutex.lock();
+	// send	
+	char ToSend[] = "L";
+	Client.Send(ToSend, sizeof(ToSend));
+
+	// receive 
+	char Message[128];
+	std::size_t Received;
+	Client.Receive(Message, sizeof(Message), Received);
+	SRV::mutex.unlock();
+
+	return 0;
+}
+
+// ******************************************************************************
+//   
+// ******************************************************************************
+
+int SRV::getDistanceCamera()
+{
+	SRV::mutex.lock();
+	// send
+	Client.Send("R", 1);
+
+	// receive 
+	char Message[128];
+	std::size_t tamRetorno;
+	Client.Receive(Message, sizeof(Message), tamRetorno);
+
+	//printf("D - %s\n", Message);
+
+	if (tamRetorno > 0) Message[tamRetorno-2] = '\0';
+
+	while (strstr(Message,"##Range(cm)") == 0)
+	{
+		Client.Send("R", 1);
+		Client.Receive(Message, sizeof(Message), tamRetorno);
+	}
+
+	int iDistanciaAteObstaculo;
+	char junk[20];
+
+	sscanf(Message,"%s %s %d",junk, junk, &iDistanciaAteObstaculo);
+
+	SRV::mutex.unlock();
+
+	return iDistanciaAteObstaculo;
+}
+
+
+char * SRV::enviaComando(char *comando) {
+	SRV::mutex.lock();
+	char Message[128];
+	std::size_t tamRetorno;
+	Client.Send(comando, 1);
+	Client.Receive(Message, sizeof(Message), tamRetorno);
+	SRV::mutex.unlock();
+	return Message;
+}
+char * SRV::enviaComando(char *comando, int p1) {
+	char *aux = 0;
+	sprintf(aux, strcat(comando, "%d"), p1);
+	return SRV::enviaComando(aux);
+}
+
+char * SRV::enviaComando(char *comando, int p1, int p2) {
+	char *aux = 0;
+	sprintf(aux, strcat(comando, "%d%d"), p1, p2);
+	return SRV::enviaComando(aux);
+}
+
+void SRV::turnLeft() {
+	enviaComando("0");
+}
+
+void SRV::turnRight() {
+	enviaComando(".");
+}
+
+void SRV::driftBackLeft() {
+	enviaComando("1");
+}
+
+void SRV::driftBackRight() {
+	enviaComando("3");
+}
+
+void SRV::moveBack() {
+	enviaComando("2");
+}
+
+void SRV::stop() {
+	enviaComando("5");
+}
+
+void SRV::driftLeft() {
+	enviaComando("4");
+}
+
+void SRV::driftRight() {
+	enviaComando("7");
+}
+
+void SRV::driveLeft() {
+	enviaComando("4");
+}
+
+void SRV::driveRight() {
+	enviaComando("6");
+}
+// ****************************************************************************
+// Forças: 0 a 100% [char de 0 a 100, crescente]
+//         de -0 a -100, força decescente [char 156 ate 255]
+// Tempo de ativação: 0 a 100ms * 10ms
+// ****************************************************************************
+
+int SRV::ativaMotor(int pforca_e, int pforca_d, int ptempo)
+{
+	SRV::mutex.lock();
+	//if (this->isAbleToRun()) {
+	char forca_e[2];
+	char forca_d[2];
+	char tempo[2];
+
+	if (pforca_d < 0) pforca_d = pforca_d + 256;
+	if (pforca_e < 0) pforca_e = pforca_e + 256;
+
+	strcpy (forca_e," ");
+	strcpy (forca_d," ");
+	strcpy (tempo," ");
+
+	forca_e[0] = char(pforca_e);
+	forca_d[0] = char(pforca_d);
+	tempo[0] = char(ptempo);
+
+	Client.Send("M", 1);
+	Client.Send(forca_e, 1);
+	Client.Send(forca_d, 1);
+	Client.Send(tempo, 1);
+
+	// receive
+	char Message[128];
+	std::size_t Received;
+	Client.Receive(Message, sizeof(Message), Received);
+	//std::cout << Message;
+	//}
+	SRV::mutex.unlock();
+
+	return(0);
+}
+
+// ****************************************************************************
+//
+// ****************************************************************************
+
+char* SRV::getImage(int *tamanhoImg, int grava)
+{
+	SRV::mutex.lock();
+	int tm = 4500;
+	std::size_t tam_ret_bytes;
+
+	char mensagem[4500];
+
+	char *img;
+	img = (char *) calloc (15000,sizeof(char));
+
+	int posicao = 0; // posicao no vetor de imagem
+
+	Client.Send("I", 1);
+	Client.Receive(mensagem, tm, tam_ret_bytes);
+
+	for (unsigned int i=10; i<tam_ret_bytes; i++)
+	{
+		img[i-10] = mensagem[i];
+		posicao = i-10;
+	}
+
+	posicao++;
+
+	int fim = 0;
+
+	for (unsigned int i=0; i<tam_ret_bytes; i++)
+	{
+		if ((mensagem[i] == -1) && (mensagem[i+1] == -39))
+		{
+			fim = 1;
+		}
+	}
+
+	while (fim == 0)
+	{
+		Client.Receive(mensagem, tm, tam_ret_bytes);
+
+		for (unsigned int i=0; i<tam_ret_bytes; i++)
+		{
+			img[posicao] =  mensagem[i];
+			posicao++; 
+		}
+
+		for (unsigned int i=0; i<tam_ret_bytes; i++)
+		{
+			if ((mensagem[i] == -1) && (mensagem[i+1] == -39))
+			{
+				fim = 1;
+			}
+		}
+	}
+
+	SRV::mutex.unlock();
+
+	//
+	//
+	//
+
+	if (grava)
+	{
+		FILE *f;
+		char nomef[20];
+		sprintf(nomef,"%d",IndiceNomeImagem);
+		strcat(nomef,".jpeg");
+		f = fopen(nomef,"wb");
+		if (1) printf(">> Gravando imagem %d...\n",IndiceNomeImagem);
+		IndiceNomeImagem++;
+
+		for (int i=0; i<posicao; i++) 
+		{
+			fprintf(f,"%c",img[i]);
+			fflush(f);
+		}
+
+		fclose(f);
+	}
+
+	//
+	// atualiza variavel com tamanho da imagem e retorna ponteiro
+	//
+
+	(*tamanhoImg) = posicao;
+	return img;
+}
+
+// ******************************************************************************
+//   
+// ******************************************************************************
+
+float SRV::getSonar()
+{
+	SRV::mutex.lock();
+	// send	
+	char ToSend[] = "p";
+	Client.Send(ToSend, sizeof(ToSend));
+
+	// receive 
+	char Message[128];
+	std::size_t Received;
+	Client.Receive(Message, sizeof(Message), Received);
+
+	double cm;
+	char lixo[20];
+	//printf("S - %s\n", Message);
+	sscanf(Message,"%s %lf",lixo,&cm);
+
+	cm = cm / 100.0;
+	cm = cm * 2.54;
+
+	SRV::mutex.unlock();
+
+	return cm;
+}
+
+bool SRV::isAbleToRun() {
+	return this->ableToRun;
+}
+
+void SRV::setAbleToRun(bool a) {
+	this->ableToRun = a;
+}

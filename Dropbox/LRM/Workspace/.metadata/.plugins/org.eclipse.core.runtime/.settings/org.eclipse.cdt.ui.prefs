@@ -1,0 +1,17 @@
+#Wed Nov 02 17:30:19 BRST 2011
+useQuickDiffPrefPage=true
+org.eclipse.cdt.ui.outline.groupnamespaces=true
+useAnnotationsPrefPage=true
+org.eclipse.cdt.ui.cview.groupincludes=true
+org.eclipse.cdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+scalability.parserBasedContentAssist=true
+scalability.semanticHighlight=true
+scalability.enableAll=true
+spelling_locale_initialized=true
+scalability.syntaxColor=true
+org.eclipse.cdt.ui.outline.groupmembers=true
+eclipse.preferences.version=1
+org.eclipse.cdt.ui.text.templates.custom=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>
+hoverModifierMasks=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;0;org.eclipse.cdt.ui.ProblemHover;0;org.eclipse.cdt.ui.CDocHover;0;org.eclipse.cdt.ui.CMacroExpansionHover;0;org.eclipse.cdt.ui.CSourceHover;131072;org.eclipse.cdt.ui.AnnotationHover;0;
+scalability.contentAssistAutoActivation=true
+hoverModifiers=org.eclipse.cdt.ui.BestMatchHover;0;org.eclipse.cdt.debug.internal.ui.editors.DebugTextHover;\!0;org.eclipse.cdt.ui.ProblemHover;\!0;org.eclipse.cdt.ui.CDocHover;\!0;org.eclipse.cdt.ui.CMacroExpansionHover;\!0;org.eclipse.cdt.ui.CSourceHover;Shift;org.eclipse.cdt.ui.AnnotationHover;\!0;

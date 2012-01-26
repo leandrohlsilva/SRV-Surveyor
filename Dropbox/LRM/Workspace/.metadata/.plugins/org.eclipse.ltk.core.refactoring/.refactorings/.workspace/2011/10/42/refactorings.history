@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;ImageBasedController1.1/src/ImageBasedController1.1.cpp&apos;" deleteContents="false" description="Delete resource &apos;ImageBasedController1.1/src/ImageBasedController1.1.cpp&apos;" element1="/ImageBasedController1.1/src/ImageBasedController1.1.cpp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1318593037355"/>
+</session>

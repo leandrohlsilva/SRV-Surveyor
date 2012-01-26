@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;ObstacleDetector/src/ImageBasedController.cpp&apos; to &apos;ObstacleDetector.cpp&apos;" description="Rename resource &apos;ImageBasedController.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/ImageBasedController.cpp" name="ObstacleDetector.cpp" stamp="1320344795968" updateReferences="true"/>
+</session>

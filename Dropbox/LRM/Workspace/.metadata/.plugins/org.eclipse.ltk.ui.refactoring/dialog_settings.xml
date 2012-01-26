@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="RefactoringWizard.Refactoring">
+		<item value="435" key="height"/>
+		<item value="640" key="width"/>
+	</section>
+	<section name="RefactoringWizard.preview">
+		<item value="470" key="height"/>
+		<item value="670" key="width"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+	</section>
+	<section name="RefactoringWizard.Extract Constant">
+		<item value="435" key="height"/>
+		<item value="640" key="width"/>
+	</section>
+</section>

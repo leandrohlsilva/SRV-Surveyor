@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;SRVSurveyor1.1/src/SRVSuveryor1.1.cpp&apos; to &apos;SRVSurveyor1.1.cpp&apos;" description="Rename resource &apos;SRVSuveryor1.1.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/SRVSuveryor1.1.cpp" name="SRVSurveyor1.1.cpp" stamp="1315934714964" updateReferences="true"/>
+</session>

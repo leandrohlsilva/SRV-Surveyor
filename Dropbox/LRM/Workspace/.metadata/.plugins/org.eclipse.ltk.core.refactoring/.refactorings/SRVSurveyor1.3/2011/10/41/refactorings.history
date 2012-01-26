@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;SRVSurveyor1.3/src/SocketTCP.cpp&apos; to &apos;TCPSocket.cpp&apos;" description="Rename resource &apos;SocketTCP.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/SocketTCP.cpp" name="TCPSocket.cpp" stamp="1318110266499" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;SRVSurveyor1.3/src/SocketTCP.h&apos; to &apos;TCPSocket.h&apos;" description="Rename resource &apos;SocketTCP.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/SocketTCP.h" name="TCPSocket.h" stamp="1318110280165" updateReferences="true"/>
+</session>
